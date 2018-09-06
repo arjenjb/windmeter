@@ -10,8 +10,8 @@ from windmeter.weerbericht import get_weer_meting, DENHOORN
 
 LOG = logging.getLogger(__name__)
 
-def button_pushed():
-    LOG.info("Button pushed")
+def button_pushed(arg):
+    LOG.info("Button pushed: %s", arg)
 
 class Aansturing(object):
     def __init__(self):
@@ -21,7 +21,7 @@ class Aansturing(object):
         button_pin = 27
 
         GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(button_pin, GPIO.BOTH, callback=button_pushed, bouncetime=300)
+        GPIO.add_event_detect(button_pin, GPIO.RISING, callback=button_pushed, bouncetime=300)
 
         self.richting_dial = DirectionDial(pwm)
         self.snelheid_dial = SpeedDial(pwm)
