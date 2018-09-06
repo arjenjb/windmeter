@@ -12,10 +12,7 @@ import RPi.GPIO as GPIO
 LOG = logging.getLogger(__name__)
 
 servo_neutral = 368
-halleffect_pin_number = 21
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(halleffect_pin_number, GPIO.IN)
 
 marker_start_event = threading.Event()
 marker_end_event = threading.Event()
@@ -31,8 +28,6 @@ def marker_reached(channel):
         LOG.debug("Marker start")
 
 
-GPIO.add_event_detect(halleffect_pin_number, GPIO.BOTH, callback=marker_reached)
-
 MARKER_START = object()
 MARKER_END = object()
 
@@ -42,6 +37,12 @@ CalibrationData = namedtuple('CalibrationData', ('marker', 'ccw', 'cw'))
 class DirectionDial(object):
     def __init__(self, pwm):
         self.pwm = pwm
+
+        # setup hall effect sensor
+        halleffect_pin_number = 21
+
+        GPIO.setup(halleffect_pin_number, GPIO.IN)
+        GPIO.add_event_detect(halleffect_pin_number, GPIO.BOTH, callback=marker_reached)
 
         self.calibration_data = []
         self.last_calibration = datetime.utcnow()

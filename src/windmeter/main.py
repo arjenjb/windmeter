@@ -10,6 +10,9 @@ from windmeter.weerbericht import get_weer_meting, DENHOORN
 
 LOG = logging.getLogger(__name__)
 
+def button_pushed():
+    LOG.info("Button pushed")
+
 class Aansturing(object):
     def __init__(self):
         pwm = Adafruit_PCA9685.PCA9685()
@@ -30,9 +33,9 @@ class Aansturing(object):
 
     def start(self):
         button_pin = 27
-        
+
         GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(button_pin, GPIO.FALLING, callback=lambda: self.button_pushed(), bouncetime=300)
+        GPIO.add_event_detect(button_pin, GPIO.BOTH, callback=button_pushed, bouncetime=300)
 
         while True:
             meting = get_weer_meting(DENHOORN)
@@ -48,6 +51,8 @@ class Aansturing(object):
 
 try:
     logging.basicConfig(level=logging.INFO)
+    GPIO.setmode(GPIO.BCM)
+
     Aansturing()
 except KeyboardInterrupt:
     GPIO.cleanup()  # clean up GPIO on normal exit
