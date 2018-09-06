@@ -18,6 +18,11 @@ class Aansturing(object):
         pwm = Adafruit_PCA9685.PCA9685()
         pwm.set_pwm_freq(60)  # good for servos
 
+        button_pin = 27
+
+        GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.add_event_detect(button_pin, GPIO.BOTH, callback=button_pushed, bouncetime=300)
+
         self.richting_dial = DirectionDial(pwm)
         self.snelheid_dial = SpeedDial(pwm)
         self.meting = None
@@ -32,11 +37,6 @@ class Aansturing(object):
         LOG.info("Button pushed!")
 
     def start(self):
-        button_pin = 27
-
-        GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(button_pin, GPIO.BOTH, callback=button_pushed, bouncetime=300)
-
         while True:
             meting = get_weer_meting(DENHOORN)
             laatste_meting = self.meting
