@@ -9,7 +9,7 @@ from windmeter.dial.speed import SpeedDial
 from windmeter.weerbericht import get_weer_meting, DENHOORN
 
 LOG = logging.getLogger(__name__)
-Ö
+
 class Aansturing(object):
     def __init__(self):
         pwm = Adafruit_PCA9685.PCA9685()
@@ -30,6 +30,7 @@ class Aansturing(object):
 
     def start(self):
         button_pin = 27
+        
         GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.add_event_detect(button_pin, GPIO.FALLING, callback=lambda: self.button_pushed(), bouncetime=300)
 
