@@ -36,7 +36,7 @@ class Aansturing(object):
         for i in range(0, 40, 5):
             LOG.info("Snelheid: %s", i)
             self.snelheid_dial.set_snelheid_ms(i)
-            time.sleep(1)
+            time.sleep(5)
 
         LOG.info("Done")
 
