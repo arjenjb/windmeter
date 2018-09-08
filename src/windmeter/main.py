@@ -33,7 +33,7 @@ class Aansturing(object):
     def self_test(self):
         LOG.info("Starting self-test")
 
-        for i in range(0, 40, step=4):
+        for i in range(0, 40, 5):
             LOG.info("Snelheid: %s", i)
             self.snelheid_dial.set_snelheid_ms(i)
             time.sleep(1)
