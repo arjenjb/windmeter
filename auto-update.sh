@@ -14,7 +14,7 @@ if [ $LOCAL = $REMOTE ]; then
 elif [ $LOCAL = $BASE ]; then
     echo "Need to pull"
     service windmeter stop
-    ./knipperlicht.py
+    ./knipperlicht.py &
     sudo -u arjen git pull
     service windmeter start
 

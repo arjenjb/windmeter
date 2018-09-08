@@ -27,7 +27,18 @@ class Aansturing(object):
         self.snelheid_dial = SpeedDial(pwm)
         self.meting = None
 
+        self.self_test()
         self.start()
+
+    def self_test(self):
+        LOG.info("Starting self-test")
+
+        for i in range(0, 40, step=4):
+            LOG.info("Snelheid: %s", i)
+            self.snelheid_dial.set_snelheid_ms(i)
+            time.sleep(1)
+
+        LOG.info("Done")
 
     def update_dials(self, meting):
         # self.richting_dial.update(meting)
