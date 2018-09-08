@@ -48,6 +48,8 @@ class SpeedDial(object):
         if snelheid_ms == self.snelheid_ms:
             return
 
+        LOG.info("Setting speed to %s m/s", snelheid_ms)
+
         self.snelheid_ms = snelheid_ms
         self.pwm.set_pwm(1, 0, self.get_servo_pos(self.snelheid_ms))
 
