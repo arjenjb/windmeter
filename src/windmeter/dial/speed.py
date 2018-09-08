@@ -9,6 +9,8 @@ class SpeedDial(object):
         self.pwm = pwm
         self.snelheid_ms = None
 
+        self.set_snelheid_ms(0)
+
     def get_servo_pos(self, v):
         servo_00 = 476
         servo_05 = 447
@@ -42,9 +44,12 @@ class SpeedDial(object):
 
         return position
 
-    def update(self, meting):
-        if meting.snelheid_ms == self.snelheid_ms:
+    def set_snelheid_ms(self, snelheid_ms):
+        if snelheid_ms == self.snelheid_ms:
             return
 
-        self.snelheid_ms = meting.snelheid_ms
+        self.snelheid_ms = snelheid_ms
         self.pwm.set_pwm(1, 0, self.get_servo_pos(self.snelheid_ms))
+
+    def update(self, meting):
+        self.set_snelheid_ms(meting.snelheid_ms)

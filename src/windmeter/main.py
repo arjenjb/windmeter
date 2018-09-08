@@ -23,14 +23,14 @@ class Aansturing(object):
         GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.add_event_detect(button_pin, GPIO.RISING, callback=button_pushed, bouncetime=300)
 
-        self.richting_dial = DirectionDial(pwm)
+        # self.richting_dial = DirectionDial(pwm)
         self.snelheid_dial = SpeedDial(pwm)
         self.meting = None
 
         self.start()
 
     def update_dials(self, meting):
-        self.richting_dial.update(meting)
+        # self.richting_dial.update(meting)
         self.snelheid_dial.update(meting)
 
     def button_pushed(self):
